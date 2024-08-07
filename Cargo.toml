@@ -1,0 +1,27 @@
+cargo-features = ["edition2024"]
+
+[package]
+name = "rustic_cryptography"
+version = "0.1.0"
+edition = "2024"
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[package.metadata.docs.rs]
+rustdoc-args = [ "--html-in-header", "./src/docs-header.html" ]
+cargo-args = ["-Zunstable-options", "-Zrustdoc-scrape-examples"]
+
+[dependencies]
+anyhow = { version = "1.0.86", features = ["std", "backtrace"]}
+base64 = "0.22.1"
+itertools = "0.13.0"
+thiserror = "1.0.63"
+serde = { version = "1.0.204", features = ["derive"] }
+wasm-bindgen = { version = "0.2.92", optional = true }
+web-sys = { version = "0.3.61", features = ["console"], optional = true }
+console_error_panic_hook = { version = "0.1.7", optional = true }
+
+[features]
+default = ["wasm"]
+wasm = ["dep:wasm-bindgen", "dep:web-sys", "dep:console_error_panic_hook"]

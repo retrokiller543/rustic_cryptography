@@ -1,0 +1,80 @@
+@use "sass:list";
+
+@use "bulma/sass/utilities/initial-variables" as iv;
+@use "bulma/sass/utilities/css-variables" as cv;
+@use "bulma/sass/utilities/derived-variables" as dv;
+@use "bulma/sass/themes/setup";
+
+// Nord color palette
+$polar-night-0: hsl(220, 13%, 18%); // nord0
+$polar-night-1: hsl(220, 14%, 20%); // nord1
+$polar-night-2: hsl(219, 13%, 25%); // nord2
+$polar-night-3: hsl(218, 14%, 30%); // nord3
+$snow-storm-0: hsl(210, 16%, 92%); // nord4
+$snow-storm-1: hsl(210, 24%, 96%); // nord5
+$snow-storm-2: hsl(210, 31%, 100%); // nord6
+$frost-0: hsl(187, 27%, 60%); // nord7
+$frost-1: hsl(188, 30%, 64%); // nord8
+$frost-2: hsl(191, 28%, 67%); // nord9
+$frost-3: hsl(197, 26%, 75%); // nord10
+$aurora-red: hsl(358, 65%, 64%); // nord11
+$aurora-orange: hsl(29, 54%, 61%); // nord12
+$aurora-yellow: hsl(49, 60%, 75%); // nord13
+$aurora-green: hsl(99, 32%, 62%); // nord14
+$aurora-purple: hsl(289, 48%, 64%); // nord15
+
+// The main lightness of this theme
+$scheme-main-l: 14%; // Adjusted for Nord theme
+$background-l: 18%; // Adjusted for Nord theme
+$text-l: 71%;
+
+// The main scheme color, used to make calculations
+$scheme-main: $polar-night-0;
+$background: $polar-night-1;
+$text: $snow-storm-2;
+
+@mixin nord-theme {
+  @each $name, $color in dv.$colors {
+    $base: $color;
+
+    @if type-of($color == "list") {
+      $base: list.nth($color, 1);
+    }
+
+    @include cv.generate-on-scheme-colors($name, $base, $scheme-main);
+  }
+
+  @include cv.register-vars(
+    (
+      "scheme-brightness": "dark",
+      "scheme-main-l": $scheme-main-l,
+      "scheme-main-bis-l": $scheme-main-l + 2%,
+      "scheme-main-ter-l": $scheme-main-l + 4%,
+      "soft-l": iv.$dark-l,
+      "bold-l": iv.$light-l,
+      "soft-invert-l": iv.$light-l,
+      "bold-invert-l": iv.$dark-l,
+      "background-l": $background-l,
+      "border-weak-l": 21%,
+      "border-l": 24%,
+      "text-weak-l": 53%,
+      "text-l": $text-l,
+      "text-strong-l": 93%,
+      "text-title-l": 100%,
+      "hover-background-l-delta": 5%,
+      "active-background-l-delta": 10%,
+      "hover-border-l-delta": 10%,
+      "active-border-l-delta": 20%,
+      "hover-color-l-delta": 5%,
+      "active-color-l-delta": 10%,
+    )
+  );
+
+  @include cv.register-hsl("shadow", white);
+}
+
+
+@include cv.bulma-theme($name: "nord") {
+  @include nord-theme;
+  @include setup.setup-theme;
+}
