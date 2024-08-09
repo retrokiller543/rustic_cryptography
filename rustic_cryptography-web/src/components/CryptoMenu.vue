@@ -11,6 +11,10 @@
                 <li><router-link to="/caesar">Caesar Cipher</router-link></li>
                 <li><router-link to="/vigenere">Vigenere Cipher</router-link></li>
             </ul>
+            <p class="menu-label">Asymmetric Ciphers</p>
+            <ul class="menu-list">
+                <li><router-link to="/rsa">RSA</router-link></li>
+            </ul>
         </aside>
     </div>
 </template>
@@ -33,6 +37,9 @@ export default {
 
 <style scoped lang="scss">
 
+li {
+    list-style: none;
+}
 
 .crypto-menu {
     display: flex;
@@ -41,9 +48,14 @@ export default {
         width: 250px;
         transition: transform 0.3s ease-in-out;
         transform: translateX(-100%);
-        background-color: --primary;
-        color: --white;
         position: relative;
+        
+        @media (max-width: 768px) {
+            width: 100%;
+            transform: translateX(-100%);
+        }
+
+
 
         &.is-open {
             transform: translateX(0);

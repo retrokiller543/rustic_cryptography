@@ -21,28 +21,48 @@ export default defineComponent({
     this.loading = false
   }
 })
-
 </script>
 
 <template>
   <AppLoader v-if="loading" />
 
-  <div v-else>
+  <div v-else class="main-container">
     <header>
-    <Navbar />
-  </header>
+      <Navbar />
+    </header>
 
-  <RouterView />
+    <main class="content">
+      <RouterView />
+    </main>
 
-  <footer class="footer">
-
-  </footer>
+    <footer class="footer">
+      <div class="content has-text-centered">
+        <p>
+          <strong>Shielded Rust</strong> by <a href="https://jgthms.com">Emil Schütt</a>.
+        </p>
+      </div>
+    </footer>
   </div>
-
 </template>
 
 <style scoped>
-main {
-  height: max-content;
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+
+.main-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.content {
+  flex-grow: 1;
+}
+
+.footer {
+  z-index: 0;
 }
 </style>

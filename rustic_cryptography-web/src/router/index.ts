@@ -27,6 +27,16 @@ const router = createRouter({
       path: '/caesar',
       name: 'caesar',
       component: () => import('../views/CaesarView.vue')
+    },
+    {
+      path: '/vigenere',
+      name: 'vigenere',
+      component: () => import('../views/VigenereView.vue')
+    },
+    {
+      path: '/rsa',
+      name: 'rsa',
+      component: () => import('../views/RSAView.vue')
     }
   ]
 })

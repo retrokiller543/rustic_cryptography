@@ -1,18 +1,70 @@
 use anyhow::Result;
-
 use crate::config;
-use crate::utils;
-use crate::utils::string::decode_string;
+use crate::utils::string::{base64_decode_string, base64_encode_string};
 
 #[cfg(feature = "wasm")]
-pub mod wasm_bindgen;
+pub mod wasm_binding;
 
 pub fn encrypt_string(input: &str, config: &config::Config, key: usize) -> Result<String> {
-    let encoded_indices = utils::string::encode_string(input, &config)?;
+    let input = if config.is_base64() {
+        base64_encode_string(input)
+    } else {
+        input.to_string()
+    };
 
-    let encrypted: Vec<usize> = encoded_indices.iter()
-        .map(|index| (index + key) % config.alfabet().chars().count())
+    if key == 0 {
+        return Ok(input.to_string());
+    }
+
+    let alphabet: Vec<char> = config.alfabet().chars().collect();
+    let alphabet_length = alphabet.len();
+    let key = key % alphabet_length;
+
+    let encrypted: String = input.chars()
+        .map(|c| {
+            if let Some(index) = alphabet.iter().position(|&a| a == c) {
+                alphabet[(index + key) % alphabet_length]
+            } else {
+                c
+            }
+        })
         .collect();
 
-    decode_string(encrypted, config)
+    Ok(encrypted)
+}
+
+pub fn decrypt_string(input: &str, config: &config::Config, key: usize) -> Result<String> {
+    if key == 0 {
+        return Ok(input.to_string());
+    }
+
+    let alphabet: Vec<char> = config.alfabet().chars().collect();
+    let alphabet_length = alphabet.len();
+    let key = key % alphabet_length;
+
+    let decrypted: String = if config.is_base64() {
+        let encoded: String = input.chars()
+            .map(|c| {
+                if let Some(index) = alphabet.iter().position(|&a| a == c) {
+                    alphabet[(index + alphabet_length - key) % alphabet_length]
+                } else {
+                    c
+                }
+            })
+            .collect();
+
+        base64_decode_string(&encoded)?
+    } else {
+        input.chars()
+            .map(|c| {
+                if let Some(index) = alphabet.iter().position(|&a| a == c) {
+                    alphabet[(index + alphabet_length - key) % alphabet_length]
+                } else {
+                    c
+                }
+            })
+            .collect()
+    };
+
+    Ok(decrypted)
 }

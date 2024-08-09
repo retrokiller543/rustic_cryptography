@@ -1,6 +1,6 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
-import { Config, get_default_config } from 'rustic_cryptography'
+import { Config, get_default_config } from 'shielded_rust'
 
 export const useConfigStore = defineStore('config', () => {
   const config = ref(get_default_config());

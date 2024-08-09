@@ -1,7 +1,7 @@
 <template>
     <main class="is-flex">
       <CryptoMenu />
-      <section class="section">
+      <section class="of-auto">
         <slot></slot>
       </section>
       <button
@@ -18,7 +18,7 @@
   import { ref } from 'vue';
   import CryptoMenu from './CryptoMenu.vue';
   import ConfigModal from './ConfigModal.vue';
-  import { Config } from 'rustic_cryptography';
+  import { Config } from 'shielded_rust';
   
   export default {
     components: {
@@ -59,5 +59,6 @@
     position: fixed;
     bottom: 1rem;
     right: 1rem;
+    z-index: 41;
   }
   </style>

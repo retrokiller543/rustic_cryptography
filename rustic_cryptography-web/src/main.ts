@@ -6,6 +6,7 @@ import { createPinia } from 'pinia'
 import Modal from './components/common/Modal.vue';
 import IconButton from './components/common/IconButton.vue';
 import CloseIcon from './assets/icons/CloseIcon.vue';
+import CryptoView from './components/CryptoView.vue';
 import App from './App.vue'
 import router from './router'
 
@@ -14,6 +15,7 @@ const app = createApp(App)
 app.component("Modal", Modal)
 app.component("IconButton", IconButton)
 app.component("CloseIcon", CloseIcon)
+app.component("CryptoView", CryptoView)
 app.use(createPinia())
 app.use(router)
 

@@ -6,7 +6,7 @@ use std::fmt::Display;
 use serde::{Deserialize, Serialize};
 
 pub const DEFAULT_ALFABET: &str = "abcdefghijklmnopqrstuvwxyzåäö0123456789 .,!?';:\"()-";
-pub const BASE64_ALFABET: &str = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+pub const BASE64_ALFABET: &str = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
 
 #[derive(Default, Serialize, Deserialize, Clone, Debug, PartialEq, Eq)]
 pub struct ConfigBuilder {

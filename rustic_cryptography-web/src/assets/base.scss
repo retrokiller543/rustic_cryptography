@@ -38,3 +38,8 @@ $beige-lighter: #eff0eb;
 
 // Import the Google Font
 @import url("https://fonts.googleapis.com/css?family=Nunito:400,700");
+
+html, body {
+  font-family: "Nunito", sans-serif;
+  height: 100%;
+}

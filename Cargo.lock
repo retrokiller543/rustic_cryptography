@@ -172,20 +172,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "719b953e2095829ee67db738b3bfa9fa368c94900df327b3f07fe6e794d2fe1f"
 
 [[package]]
-name = "rustic_cryptography"
-version = "0.1.0"
-dependencies = [
- "anyhow",
- "base64",
- "console_error_panic_hook",
- "itertools",
- "serde",
- "thiserror",
- "wasm-bindgen",
- "web-sys",
-]
-
-[[package]]
 name = "serde"
 version = "1.0.204"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -203,6 +189,20 @@ dependencies = [
  "proc-macro2",
  "quote",
  "syn",
+]
+
+[[package]]
+name = "shielded_rust"
+version = "0.0.1"
+dependencies = [
+ "anyhow",
+ "base64",
+ "console_error_panic_hook",
+ "itertools",
+ "serde",
+ "thiserror",
+ "wasm-bindgen",
+ "web-sys",
 ]
 
 [[package]]

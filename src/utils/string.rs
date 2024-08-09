@@ -1,21 +1,47 @@
-use anyhow::{bail, Result};
-use base64::prelude::BASE64_STANDARD_NO_PAD;
-use base64::Engine;
 use crate::config::Config;
 use crate::error::Error;
+use crate::utils::set_panic_hook;
+use anyhow::{bail, Result};
+use base64::prelude::BASE64_STANDARD;
+use base64::Engine;
 
-use super::set_panic_hook;
+macro_rules! encode {
+    ($input:ident, $config:ident) => {
+        if $config.is_base64() {
+            let base64_str = crate::utils::string::base64_encode_string($input);
+            crate::utils::string::encode_string(&base64_str, $config)?
+        } else {
+            crate::utils::string::encode_string($input, $config)?
+        }
+    };
+}
+
+macro_rules! decode {
+    ($input:ident, $config:ident) => {
+        if $config.is_base64() {
+            let decoded = crate::utils::string::decode_string($input, $config)?;
+            crate::utils::string::base64_decode_string(&decoded)?
+        } else {
+            crate::utils::string::decode_string($input, $config)?
+        }
+    };
+}
+
+pub(crate) use {decode, encode};
+
+pub fn base64_encode_string(input: &str) -> String {
+    BASE64_STANDARD.encode(input.as_bytes())
+}
+
+pub fn base64_decode_string(input: &str) -> Result<String> {
+    let decoded = BASE64_STANDARD.decode(input)?;
+    Ok(String::from_utf8(decoded)?)
+}
 
 pub fn encode_string(input: &str, config: &Config) -> Result<Vec<usize>> {
     set_panic_hook();
 
-    let mut input = input.to_lowercase();
-
-    input = if config.is_base64() {
-        BASE64_STANDARD_NO_PAD.encode(input.as_bytes())
-    } else {
-        input.to_owned()
-    };
+    let input = input.to_lowercase(); // Ensure the input is in lowercase
 
     let mut result = Vec::new();
 
@@ -47,22 +73,12 @@ pub fn decode_string(encoded_indices: Vec<usize>, config: &Config) -> Result<Str
         .iter()
         .map(|&x| {
             if x < alphabet_length {
-                config.alfabet
-                    .chars()
-                    .nth(x)
-                    .ok_or(Error::CharacterParseError(x))
+                config.alfabet.chars().nth(x).ok_or(Error::CharacterParseError(x))
             } else {
                 Err(Error::CharacterParseError(x))
             }
         })
         .collect::<Result<String, _>>()?;
-
-    let decoded = if config.is_base64() {
-        let decoded_bytes = BASE64_STANDARD_NO_PAD.decode(&decoded)?;
-        String::from_utf8(decoded_bytes)?
-    } else {
-        decoded
-    };
 
     Ok(decoded)
 }

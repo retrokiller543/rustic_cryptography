@@ -1,5 +1,4 @@
 import { fileURLToPath, URL } from 'node:url'
-
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import vueDevTools from 'vite-plugin-vue-devtools'
@@ -20,10 +19,10 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),
-      eventsource:
-        "./node_modules/sockjs-client/lib/transport/browser/eventsource.js",
+      eventsource: "./node_modules/sockjs-client/lib/transport/browser/eventsource.js",
       events: "./node_modules/sockjs-client/lib/event/emitter.js",
       crypto: "./node_modules/sockjs-client/lib/utils/browser-crypto.js",
+      'pkg': fileURLToPath(new URL('./pkg', import.meta.url)),  // Add this line to alias the pkg directory
     }
   },
   define: {

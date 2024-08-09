@@ -47,7 +47,7 @@
 
 <script lang="ts">
 import { defineComponent, reactive } from 'vue';
-import { Config, get_default_config, get_default_alfabet, get_base64_alfabet } from 'rustic_cryptography'
+import { Config, get_default_alfabet, get_base64_alfabet } from 'shielded_rust'
 import { useConfigStore } from '../stores/config';
 import Modal from './common/Modal.vue'
 
@@ -66,14 +66,14 @@ export default defineComponent({
       if (typeof value === 'boolean') return 'checkbox';
       if (typeof value === 'number') return 'number';
       if (typeof value === 'string') return 'input';
-      // Add more cases for different types if needed
+
       return 'input';
     },
     getInputType(value: any) {
       if (typeof value === 'boolean') return 'checkbox';
       if (typeof value === 'number') return 'number';
       if (typeof value === 'string') return 'text';
-      // Add more cases for different types if needed
+
       return 'text';
     },
     isRequired(value: any) {
