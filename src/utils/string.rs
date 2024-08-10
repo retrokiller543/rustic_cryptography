@@ -46,7 +46,7 @@ pub fn encode_string(input: &str, config: &Config) -> Result<Vec<usize>> {
     let mut result = Vec::new();
 
     for c in input.chars() {
-        if let Some(index) = config.alfabet().find(c) {
+        if let Some(index) = config.alphabet().find(c) {
             result.push(index);
         } else {
             bail!(Error::IndexNotFound(c));
@@ -68,12 +68,12 @@ pub fn encode_asymmetric_string(input: &str, config: &Config) -> Result<Vec<usiz
 }
 
 pub fn decode_string(encoded_indices: Vec<usize>, config: &Config) -> Result<String> {
-    let alphabet_length = config.alfabet.chars().count();
+    let alphabet_length = config.alphabet.chars().count();
     let decoded = encoded_indices
         .iter()
         .map(|&x| {
             if x < alphabet_length {
-                config.alfabet.chars().nth(x).ok_or(Error::CharacterParseError(x))
+                config.alphabet.chars().nth(x).ok_or(Error::CharacterParseError(x))
             } else {
                 Err(Error::CharacterParseError(x))
             }

@@ -16,7 +16,7 @@ pub fn encrypt_string(input: &str, config: &config::Config, key: usize) -> Resul
         return Ok(input.to_string());
     }
 
-    let alphabet: Vec<char> = config.alfabet().chars().collect();
+    let alphabet: Vec<char> = config.alphabet().chars().collect();
     let alphabet_length = alphabet.len();
     let key = key % alphabet_length;
 
@@ -38,7 +38,7 @@ pub fn decrypt_string(input: &str, config: &config::Config, key: usize) -> Resul
         return Ok(input.to_string());
     }
 
-    let alphabet: Vec<char> = config.alfabet().chars().collect();
+    let alphabet: Vec<char> = config.alphabet().chars().collect();
     let alphabet_length = alphabet.len();
     let key = key % alphabet_length;
 

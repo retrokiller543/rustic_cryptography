@@ -20,13 +20,13 @@ impl Config {
     }
 
     pub fn with_base64(mut self) -> Self {
-        self.alfabet = super::BASE64_ALFABET.to_string();
+        self.alfabet = super::BASE64_ALPHABET.to_string();
         self.base64 = true;
         self
     }
 
     pub fn without_base64(mut self) -> Self {
-        self.alfabet = super::DEFAULT_ALFABET.to_string();
+        self.alfabet = super::DEFAULT_ALPHABET.to_string();
         self.base64 = false;
         self
     }
@@ -45,7 +45,7 @@ impl Config {
 impl From<super::Config> for Config {
     fn from(config: super::Config) -> Self {
         Self {
-            alfabet: config.alfabet,
+            alfabet: config.alphabet,
             base64: config.base64,
             utf8: config.utf8,
         }
@@ -55,7 +55,7 @@ impl From<super::Config> for Config {
 impl From<Config> for super::Config {
     fn from(config: Config) -> Self {
         Self {
-            alfabet: config.alfabet,
+            alphabet: config.alfabet,
             base64: config.base64,
             utf8: config.utf8,
         }
@@ -65,7 +65,7 @@ impl From<Config> for super::Config {
 impl From<&Config> for super::Config {
     fn from(config: &Config) -> Self {
         Self {
-            alfabet: config.alfabet.clone(),
+            alphabet: config.alfabet.clone(),
             base64: config.base64,
             utf8: config.utf8,
         }
@@ -75,7 +75,7 @@ impl From<&Config> for super::Config {
 impl From<&super::Config> for Config {
     fn from(config: &super::Config) -> Self {
         Self {
-            alfabet: config.alfabet.clone(),
+            alfabet: config.alphabet.clone(),
             base64: config.base64,
             utf8: config.utf8,
         }
@@ -85,7 +85,7 @@ impl From<&super::Config> for Config {
 impl Default for Config {
     fn default() -> Self {
         Self {
-            alfabet: super::DEFAULT_ALFABET.to_string(),
+            alfabet: super::DEFAULT_ALPHABET.to_string(),
             base64: false,
             utf8: false,
         }
@@ -100,10 +100,10 @@ pub fn get_default_config() -> Config {
 
 #[wasm_bindgen]
 pub fn get_default_alfabet() -> String {
-    super::DEFAULT_ALFABET.to_string()
+    super::DEFAULT_ALPHABET.to_string()
 }
 
 #[wasm_bindgen]
 pub fn get_base64_alfabet() -> String {
-    super::BASE64_ALFABET.to_string()
+    super::BASE64_ALPHABET.to_string()
 }

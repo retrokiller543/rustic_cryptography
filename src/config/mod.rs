@@ -5,12 +5,12 @@ use std::fmt::Display;
 
 use serde::{Deserialize, Serialize};
 
-pub const DEFAULT_ALFABET: &str = "abcdefghijklmnopqrstuvwxyzåäö0123456789 .,!?';:\"()-";
-pub const BASE64_ALFABET: &str = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
+pub const DEFAULT_ALPHABET: &str = "abcdefghijklmnopqrstuvwxyzåäö0123456789 .,!?';:\"()-";
+pub const BASE64_ALPHABET: &str = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
 
 #[derive(Default, Serialize, Deserialize, Clone, Debug, PartialEq, Eq)]
 pub struct ConfigBuilder {
-    pub alfabet: String,
+    pub alphabet: String,
     pub base64: bool,
     pub utf8: bool,
 }
@@ -20,32 +20,32 @@ impl ConfigBuilder {
         Self::default()
     }
 
-    pub fn with_alfabet(mut self, alfabet: String) -> Self {
-        self.alfabet = alfabet;
+    pub fn with_alphabet(mut self, alphabet: String) -> Self {
+        self.alphabet = alphabet;
         self
     }
 
     pub fn with_base64(mut self) -> Self {
-        self.alfabet = BASE64_ALFABET.to_string();
+        self.alphabet = BASE64_ALPHABET.to_string();
         self.base64 = true;
         self
     }
 
     pub fn without_base64(mut self) -> Self {
-        self.alfabet = DEFAULT_ALFABET.to_string();
+        self.alphabet = DEFAULT_ALPHABET.to_string();
         self.base64 = false;
         self
     }
 
     pub fn utf8(mut self) -> Self {
-        self.alfabet = Config::generate_full_utf8_range();
+        self.alphabet = Config::generate_full_utf8_range();
         self.utf8 = true;
         self
     }
 
     pub fn build(self) -> Config {
         Config {
-            alfabet: self.alfabet,
+            alphabet: self.alphabet,
             base64: self.base64,
             utf8: self.utf8,
         }
@@ -54,14 +54,14 @@ impl ConfigBuilder {
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, Eq)]
 pub struct Config {
-    pub alfabet: String,
+    pub alphabet: String,
     pub base64: bool,
     pub utf8: bool,
 }
 
 impl Config {
-    pub fn alfabet(&self) -> String {
-        self.alfabet.clone()
+    pub fn alphabet(&self) -> String {
+        self.alphabet.clone()
     }
 
     pub fn is_base64(&self) -> bool {
@@ -82,7 +82,7 @@ impl Config {
 impl Default for Config {
     fn default() -> Self {
         Self {
-            alfabet: DEFAULT_ALFABET.to_string(),
+            alphabet: DEFAULT_ALPHABET.to_string(),
             base64: false,
             utf8: false,
         }
