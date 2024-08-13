@@ -54,9 +54,16 @@ impl ConfigBuilder {
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, Eq)]
 pub struct Config {
+    #[serde(default = "default_alphabet")]
     pub alphabet: String,
+    #[serde(default)]
     pub base64: bool,
+    #[serde(default)]
     pub utf8: bool,
+}
+
+fn default_alphabet() -> String {
+    DEFAULT_ALPHABET.to_string()
 }
 
 impl Config {
